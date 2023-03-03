@@ -25,7 +25,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-            <a class="nav-link" href="../index.php">Home <span class="sr-only"></span></a>
+            <a class="nav-link" href="index.php">Home <span class="sr-only"></span></a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="view/form.php">formulaire</a>
@@ -33,50 +33,51 @@
         </ul>
     </div>
     </nav>
-        <!-- FORM DEBUT-->
 
-		<form class="row form_video" id="form" action="" method="post" enctype="multipart/form-data">
-			<div class="mb-3">
-			  <span class="form-label">Titre</span>
-			  <input type="text" id="title" aria-label="title"  name="title" class="form-control" required>
+    <div id="container">
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0 " type="submit">Search</button>
+        </form>
+
+		<?php
+		try
+		{
+			// On se connecte à MySQL
+			$mysqlClient = new PDO('mysql:host=localhost;dbname=video_bdd;charset=utf8', 'root', '');
+		}
+		catch(Exception $e)
+		{
+			// En cas d'erreur, on affiche un message et on arrête tout
+				die('Erreur : '.$e->getMessage());
+		}
+
+		// Si tout va bien, on peut continuer
+
+		// On récupère tout le contenu de la table video
+		$sqlQuery = 'SELECT * FROM video';
+		$videosStatement = $mysqlClient->prepare($sqlQuery);
+		$videosStatement->execute();
+		$videos = $videosStatement->fetchAll();
+
+		// On affiche chaque recette une à une
+		?>
+
+	<div class="row">
+		<?php foreach ($videos as $video) {
+		?>
+			<div class="col text-center"><h2><?php echo $video['titre']; ?></h2>
+				<video controls width="250">
+					<source src="video/<?php echo $video['urlV']; ?>" type="video/mp4">
+				</video>
 			</div>
-            <div class="mb-3">
-                <label for="video" class="form-label">Vidéo</label>
-                <input class="form-control" id="url" type="file" name="video" id="video" required>
-            </div>
+		<?php
+		}
+		?>
+	</div>
 
-			<div class="input-group justify-content">
-				<button type="submit" id="validate" class="btn btn-info" >Valider</button>
-            </div>
-            
-		</form>
-		<!-- FORM FIN -->
-        <?php
-
-        $titre = $_POST["title"];
-        date_default_timezone_set('Europe/Paris');
-        $dateT = date('y-m-d h:i:s');
-
-        $fichier = pathinfo($_FILES['video']['name']);
-        $extension_upload = $fichier['extension'];
-        $extensions_autorisees = array('mp4');
-        move_uploaded_file($_FILES['video']['tmp_name'], '../video/' .$titre.'.mp4');
-
-        $file = 'video/'.$titre.'.mp4';
-
-        if(!empty($titre)  && !empty($file)){
-        $bdd = new PDO('mysql:host=localhost;dbname=video_bdd;charset=utf8', 'root', '');
-        $bdd->exec("INSERT INTO video (titre,urlV,dateT) VALUES ('$titre','$file','$dateT')");
-        };
-        ?>
-
-		
-	</div> <!-- FIN container -->
-	
-	<footer>
-
-	</footer>
-    <script type="text/javascript" src="../src/script.js"></script> 
+</div>
+<script type="text/javascript" src="../src/script.js"></script> 
 	
 </body>
 

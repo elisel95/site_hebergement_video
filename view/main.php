@@ -1,4 +1,3 @@
-<?php include 'vu.php' ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -41,6 +40,28 @@
             <button class="btn btn-outline-success my-2 my-sm-0 " type="submit">Search</button>
         </form>
 
+		<?php
+		try
+		{
+			// On se connecte à MySQL
+			$mysqlClient = new PDO('mysql:host=localhost;dbname=video_bdd;charset=utf8', 'root', '');
+		}
+		catch(Exception $e)
+		{
+			// En cas d'erreur, on affiche un message et on arrête tout
+				die('Erreur : '.$e->getMessage());
+		}
+
+		// Si tout va bien, on peut continuer
+
+		// On récupère tout le contenu de la table video
+		$sqlQuery = 'SELECT * FROM video ORDER BY dateT DESC LIMIT 12';
+		$videosStatement = $mysqlClient->prepare($sqlQuery);
+		$videosStatement->execute();
+		$videos = $videosStatement->fetchAll();
+
+		// On affiche chaque recette une à une
+		?>
 
 	<div class="row">
 		<?php foreach ($videos as $video) {
@@ -53,10 +74,11 @@
 		<?php
 		}
 		?>
+		<a class="text-center" href='all.php'>Voir toutes les videos</a>
 	</div>
 
 </div>
-<script type="text/javascript" src="src/script.js"></script> 
+<script type="text/javascript" src="../src/script.js"></script> 
 	
 </body>
 
