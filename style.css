@@ -1,0 +1,20 @@
+body {
+    background-color : #0c175c;
+}
+
+#container{
+    margin : 5%;
+    
+}
+
+.form_video{
+    margin-top : 30px;
+    background-color : #3796b0;
+    border : 2px solid aqua;
+    padding : 5%;
+}
+
+h1 {
+    text-align:center;
+    color : aqua;
+}
