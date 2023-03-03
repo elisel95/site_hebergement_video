@@ -9,3 +9,8 @@ $('#validate').click(function(){
         alert('Votre vidéo a été ajouté.');
     };
 });
+
+$('.delete').click(function(){
+    $(".video_full").append('<p>Votre vidéo a été supprimer</p>');
+    alert('Votre vidéo a été supprimer!');
+})

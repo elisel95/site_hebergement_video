@@ -7,7 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
 	<script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
 	<!-- -->
-	<link rel="stylesheet" type="text/css" href="./src/style.css">
+	<link rel="stylesheet" type="text/css" href="../src/style.css">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -28,7 +28,7 @@
             <a class="nav-link" href="../index.php">Home <span class="sr-only"></span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="view/form.php">formulaire</a>
+            <a class="nav-link" href="form.php">formulaire</a>
         </li>
         </ul>
     </div>
@@ -46,13 +46,11 @@
             </div>
 
 			<div class="input-group justify-content">
-				<button type="submit" id="validate" class="btn btn-info" >Valider</button>
+				<button type="submit" id="validate" name="valid" class="btn btn-info" >Valider</button>
             </div>
-            
-		</form>
-		<!-- FORM FIN -->
-        <?php
+            <?php
 
+    if (isset($_POST['valid'])){
         $titre = $_POST["title"];
         date_default_timezone_set('Europe/Paris');
         $dateT = date('y-m-d h:i:s');
@@ -68,7 +66,11 @@
         $bdd = new PDO('mysql:host=localhost;dbname=video_bdd;charset=utf8', 'root', '');
         $bdd->exec("INSERT INTO video (titre,urlV,dateT) VALUES ('$titre','$file','$dateT')");
         };
+    }
         ?>
+		</form>
+		<!-- FORM FIN -->
+        
 
 		
 	</div> <!-- FIN container -->
