@@ -1,4 +1,3 @@
-
 <?php
 include 'index.php';
 
@@ -16,6 +15,5 @@ $file = $_FILES['video']['name'];
 if(!empty($titre)  && !empty($file)){
 $bdd = new PDO('mysql:host=localhost;dbname=video_bdd;charset=utf8', 'root', '');
 $bdd->exec("INSERT INTO video (titre,urlV,dateT) VALUES ('$titre','$file','$dateT')");
-
 };
 ?>
