@@ -18,7 +18,7 @@
 <body>
 <div class="col text-center video_full <?php echo $_GET['video']; ?>">
     <h2 style="text-align:center;"><?php echo $_GET['video']; ?></h2>
-	<video style="margin-left:10%;" controls width="1000">
+	<video style="margin-left:3%;" controls width="1000">
 		<source src="../video/<?php echo $_GET['video'];?>.mp4" type="video/mp4">
     </video>
     <form method="post"><button style="font-size:8px;width:70px;margin:0" name="delete" id="delete" class="delete btn btn-danger">Supprimer</button></form>
@@ -29,6 +29,35 @@
 
             }?>
 </div>
+<hr>
+
+<form method="post">
+    <label for="">Commentaire :</label>
+    <textarea class="form-control" name="commentaire" id="" rows="3"></textarea>
+    <button class="btn btn-outline-success my-2 my-sm-0 " name="com_submit" type="submit">Envoyer</button>
+</form>
+
+<hr>
+<?php   
+               $bdd = new PDO('mysql:host=localhost;dbname=video_bdd;charset=utf8', 'root', '');
+               if (isset($_POST['com_submit'])){
+                $commentaire = $_POST["commentaire"]; 
+                $id_video = $_GET["id"];
+                $bdd->exec("INSERT INTO commentaire (commentaire, id_video) VALUES ('$commentaire', ' $id_video')");
+}?>
+
+<?php $sql = "SELECT * FROM commentaire WHERE id_video = '" . $_GET["id"] . "'";
+		$searchStatement = $bdd->prepare($sql);
+		$searchStatement->execute();
+		$searchs = $searchStatement->fetchAll();
+		?><div class="row">
+		<?php foreach ($searchs as $searche) {
+		?>
+			<p style="margin-left:15px;"><?php echo $searche['commentaire']; ?></p><br>
+		<?php
+		}
+?>
+
 <script type="text/javascript" src="../src/script.js"></script> 
 	
 </body>

@@ -66,7 +66,7 @@
 				<video controls width="250">
 					<source src="../<?php echo $video['urlV']; ?>" type="video/mp4">
                 </video>
-                <a target=_blank href="video.php?video=<?php echo $video['titre']; ?>" title="<?php echo $video['titre']; ?>">Afficher la vidéo</a>
+                <a target=_blank href="video.php?video=<?php echo $video['titre']; ?>&id=<?php echo $video['id'] ?>" title="<?php echo $video['titre']; ?>">Afficher la vidéo</a>
                 
             </div>
 		<?php
